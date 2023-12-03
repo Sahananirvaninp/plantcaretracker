@@ -1,0 +1,125 @@
+-- Create a database for the Plant Care Tracker
+CREATE DATABASE IF NOT EXISTS plant_care_tracker;
+
+-- Use the created database
+USE plant_care_tracker;
+
+-- Create a table to store plant information
+CREATE TABLE IF NOT EXISTS plants (
+    plant_id INT AUTO_INCREMENT PRIMARY KEY,
+    plant_name VARCHAR(255) NOT NULL,
+    watering_frequency INT NOT NULL,
+    plant_group VARCHAR(50) NOT NULL
+);
+
+-- Create a table to store watering schedules
+CREATE TABLE IF NOT EXISTS watering_schedules (
+    schedule_id INT AUTO_INCREMENT PRIMARY KEY,
+    plant_id INT,
+    watering_date DATE NOT NULL,
+    FOREIGN KEY (plant_id) REFERENCES plants(plant_id)
+);
+
+-- Create a table to store growth tracking information
+CREATE TABLE IF NOT EXISTS growth_tracking (
+    tracking_id INT AUTO_INCREMENT PRIMARY KEY,
+    plant_id INT,
+    growth_status VARCHAR(255) NOT NULL,
+    tracking_date DATE NOT NULL,
+    FOREIGN KEY (plant_id) REFERENCES plants(plant_id)
+);
+-- Create the plants table
+CREATE TABLE plants (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plant_name VARCHAR(255) NOT NULL,
+    watering_frequency INT NOT NULL,
+    plant_group VARCHAR(255) NOT NULL
+);
+
+-- Create the watering_schedules table
+CREATE TABLE watering_schedules (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plant_id INT,
+    watering_date DATE,
+    FOREIGN KEY (plant_id) REFERENCES plants(id)
+);
+
+-- Create the growth_tracking table
+CREATE TABLE growth_tracking (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plant_id INT,
+    growth_status VARCHAR(255),
+    tracking_date DATE,
+    FOREIGN KEY (plant_id) REFERENCES plants(id)
+);
+
+-- Insert values into the plants table
+INSERT INTO plants (plant_name, watering_frequency, plant_group) VALUES
+    ('Rose', 2, 'Flowers'),
+    ('Tomato', 3, 'Vegetables'),
+    ('Basil', 1, 'Herbs'),
+    -- Add more plant entries as needed
+
+-- Insert values into the watering_schedules table
+INSERT INTO watering_schedules (plant_id, watering_date) VALUES
+    (1, '2023-12-01'),
+    (2, '2023-12-02'),
+    (3, '2023-12-03');
+    -- Add more watering schedules as needed
+
+-- Insert values into the growth_tracking table
+INSERT INTO growth_tracking (plant_id, growth_status, tracking_date) VALUES
+    (1, 'Healthy', '2023-12-01'),
+    (2, 'Growing well', '2023-12-02'),
+    (3, 'Thriving', '2023-12-03');
+    -- Add more growth tracking information as needed
+-- Create the plants table
+CREATE TABLE plants (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plant_name VARCHAR(255) NOT NULL,
+    watering_frequency INT NOT NULL,
+    plant_group VARCHAR(255) NOT NULL
+);
+
+-- Create the watering_schedules table
+CREATE TABLE watering_schedules (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plant_id INT,
+    watering_date DATE,
+    FOREIGN KEY (plant_id) REFERENCES plants(id)
+);
+
+-- Create the growth_tracking table
+CREATE TABLE growth_tracking (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plant_id INT,
+    growth_status VARCHAR(255),
+    tracking_date DATE,
+    FOREIGN KEY (plant_id) REFERENCES plants(id)
+);
+-- Insert values into the plants table
+INSERT INTO plants (plant_name, watering_frequency, plant_group) VALUES
+    ('Rose', 2, 'Flowers'),
+    ('Tomato', 3, 'Vegetables'),
+    ('Basil', 1, 'Herbs');
+
+-- Insert values into the watering_schedules table
+INSERT INTO watering_schedules (plant_id, watering_date) VALUES
+    (1, '2023-12-01'),
+    (2, '2023-12-02'),
+    (3, '2023-12-03');
+
+-- Insert values into the growth_tracking table
+INSERT INTO growth_tracking (plant_id, growth_status, tracking_date) VALUES
+    (1, 'Healthy', '2023-12-01'),
+    (2, 'Growing well', '2023-12-02'),
+    (3, 'Thriving', '2023-12-03');
+-- Retrieve all plants and their watering schedules
+SELECT plants.plant_name, plants.watering_frequency, plants.plant_group, watering_schedules.watering_date
+FROM plants
+JOIN watering_schedules ON plants.id = watering_schedules.plant_id;
+
+-- Retrieve all plants and their growth tracking information
+SELECT plants.plant_name, plants.watering_frequency, plants.plant_group, growth_tracking.growth_status, growth_tracking.tracking_date
+FROM plants
+JOIN growth_tracking ON plants.id = growth_tracking.plant_id;
